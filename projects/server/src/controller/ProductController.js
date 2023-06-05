@@ -1,74 +1,28 @@
-const db = require("../model");
-const { Op } = require("sequelize");
-const { Product } = db;
+const { ProductService } = require("../service");
 
-/* *
- * Get list of products, that user can view available products
- * With pagination, and filter by name, id_category, range price ,and sort by price
- * @param {Request} req | request query: page, page_size, name, id_category, price_min, price_max, sort_key, sort_condition
- * @param {Response} res
- * @param {NextFunction} next
+/**
+ * GetProducts is a controller function that retrieves a list of products with pagination and includes the stock count for each product.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ * @returns {Promise<Object>} - The object containing metadata and the list of products.
+ * @throws {Error} - If an error occurs while retrieving the products.
  */
-
 const GetProducts = async (req, res, next) => {
   try {
-    const {
-      page = 1,
-      page_size = 10,
+    const { page, page_size, name, id_category, price_min, price_max, sort_key, sort_condition } = req.query;
+
+    const data = await ProductService.GetProducts({
+      page,
+      page_size,
       name,
       id_category,
       price_min,
       price_max,
-      sort_key = "id_product",
-      sort_condition = "desc",
-    } = req.query;
-    const offset = (page - 1) * page_size;
-    const limit = page_size;
-    const condition = {
-      where: {
-        is_deleted: false,
-        product_name: {
-          [Op.like]: `%${name || ""}%`, // search by name
-        },
-        ...(id_category && { id_category }), // filter by id_category
-      },
-    };
-
-    // filter by price
-    if (price_min && price_max) {
-      condition.where.price = {
-        [Op.between]: [price_min, price_max], // filter by range price
-      };
-    }
-
-    // condition for sort
-    if (sort_key && sort_condition) {
-      condition.order = [[sort_key, sort_condition]];
-    }
-
-    const products = await Product.findAll({
-      ...condition,
-      offset,
-      limit,
-    }); // get data with pagination
-
-    const total_count = await Product.count({
-      ...condition,
-    }); // count total data
-
-    const total_pages = Math.ceil(total_count / page_size); // count total pages
-
-    const metadata = {
-      total_count,
-      page,
-      page_size,
-      total_pages,
-    };
-
-    const data = {
-      metadata,
-      products,
-    };
+      sort_key,
+      sort_condition,
+    });
 
     return res.status(200).json(data);
   } catch (err) {
