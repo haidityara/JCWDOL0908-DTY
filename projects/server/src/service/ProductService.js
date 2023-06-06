@@ -95,6 +95,34 @@ const GetProducts = async ({
   };
 };
 
+/** GetProduct retrieves a product by id.
+ * @param id_product
+ * @returns {Promise<Product>} with stock
+ */
+const GetProduct = async (id_product) => {
+  const product = await Product.findOne({
+    where: {
+      id_product,
+    },
+  });
+
+  // count stock
+  const stockCount = await ProductWarehouseRlt.findOne({
+    attributes: ["id_product", [db.sequelize.fn("sum", db.sequelize.col("stock")), "total_stock"]],
+    where: {
+      id_product,
+    },
+  });
+
+  const stock = stockCount.getDataValue("total_stock") || 0;
+
+  return {
+    ...product.toJSON(),
+    stock,
+  };
+};
+
 module.exports = {
   GetProducts,
+  GetProduct,
 };

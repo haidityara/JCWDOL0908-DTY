@@ -30,6 +30,22 @@ const GetProducts = async (req, res, next) => {
   }
 };
 
+/**
+ * GetProduct is a controller function that retrieves a product by id.
+ * */
+const GetProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const data = await ProductService.GetProduct(id);
+
+    return res.status(200).json(data);
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   GetProducts,
+  GetProduct,
 };
