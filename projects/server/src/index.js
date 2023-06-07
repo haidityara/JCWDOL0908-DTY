@@ -2,7 +2,7 @@ const { join } = require("path");
 require("dotenv").config({ path: join(__dirname, "../.env") });
 const express = require("express");
 const cors = require("cors");
-const { UserRouter, ProductRouter, CartRouter } = require("./router");
+const { UserRouter, ProductRouter, CartRouter, CheckoutRouter } = require("./router");
 const db = require("./model");
 
 const PORT = process.env.PORT || 8000;
@@ -38,6 +38,7 @@ app.get("/api/greetings", (req, res, next) => {
 app.use("/api/users", UserRouter);
 app.use("/api/products", ProductRouter);
 app.use("/api/carts", CartRouter);
+app.use("/api/checkout", CheckoutRouter);
 
 // ===========================
 
