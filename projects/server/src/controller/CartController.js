@@ -49,7 +49,7 @@ const RemoveFromCart = async (req, res, next) => {
       productID,
     };
 
-    const { error, response } = await CartService.RemoveFromCart(data, next);
+    const { error, response } = await CartService.RemoveFromCart(data);
     if (error) {
       return res.status(400).json({
         message: response,
