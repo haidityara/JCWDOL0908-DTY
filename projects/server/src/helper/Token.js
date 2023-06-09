@@ -1,4 +1,5 @@
 const CryptoJS = require("crypto-js");
+const bcrypt = require("bcrypt");
 const PARSE = process.env.TOKEN_PARSE;
 
 /**
@@ -35,7 +36,18 @@ const DecodeToken = async (token) => {
   return decryptedEmail;
 };
 
+const HashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
+
+const ComparePassword = async (password, hash) => {
+  return await bcrypt.compare(password, hash);
+};
+
 module.exports = {
   GenerateToken,
   DecodeToken,
+  HashPassword,
+  ComparePassword,
 };

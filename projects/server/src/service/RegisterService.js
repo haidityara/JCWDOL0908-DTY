@@ -1,6 +1,6 @@
 const db = require("../model");
 const { User } = db;
-const { GenerateToken, DecodeToken } = require("../helper/Token");
+const { GenerateToken, DecodeToken, HashPassword } = require("../helper/Token");
 const { RegisterMail } = require("../mail");
 const Mailer = require("../helper/Mailer");
 
@@ -71,7 +71,7 @@ const CreateUser = async (data) => {
  */
 const VerifyUser = async (data) => {
   const t = await db.sequelize.transaction();
-  const { token } = data;
+  const { token, password } = data;
 
   try {
     // Decode token
@@ -86,9 +86,15 @@ const VerifyUser = async (data) => {
       };
     }
 
+    // bcrypt password
+    const hashedPassword = await HashPassword(password);
+
     // Update user
     const updateUser = await User.update(
-      { is_verify: true },
+      {
+        is_verify: true,
+        password: hashedPassword,
+      },
       {
         where: { email },
         transaction: t,
