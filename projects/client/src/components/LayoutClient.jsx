@@ -1,11 +1,12 @@
+import NavbarClient from "./client/NavbarClient";
+import FooterClient from "./client/FooterClient";
+
 function LayoutClient({ children }) {
   return (
     <div className="flex flex-col">
-      <nav>Disini Navbar Client</nav>
+      <NavbarClient />
       <main>{children}</main>
-      <footer>
-        <p>Disini Footer Client</p>
-      </footer>
+      <FooterClient />
     </div>
   );
 }

@@ -3,11 +3,12 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import AdminDashboard from "./pages/AdminDashboard";
-import Homepage from "./pages/Homepage";
+import Homepage from "./pages/client/Homepage";
 import UserManagement from "./pages/UserManagement";
 import ProductManagement from "./pages/ProductManagement";
 import ProductOrder from "./pages/ProductOrder";
 import ProductReport from "./pages/ProductReport";
+import LoginClient from "./pages/client/Login";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -22,7 +23,11 @@ function App() {
   return (
     <div>
       <Routes>
+        {/*Client Route*/}
         <Route path="/" element={<Homepage />} />
+        <Route path="/client" element={<LoginClient />} />
+
+        {/*Admin Route*/}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="admin/dashboard/user-management" element={<UserManagement />} />
         <Route path="admin/dashboard/product-management" element={<ProductManagement />} />
