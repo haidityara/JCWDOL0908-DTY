@@ -39,7 +39,7 @@ app.use("/api/users", UserRouter);
 app.use("/api/products", ProductRouter);
 app.use("/api/carts", CartRouter);
 app.use("/api/checkout", CheckoutRouter);
-app.use("/api/register", RegisterRouter);
+app.use("/api/auth", RegisterRouter);
 
 // ===========================
 

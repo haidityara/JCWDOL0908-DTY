@@ -94,6 +94,7 @@ const VerifyUser = async (data) => {
       {
         is_verify: true,
         password: hashedPassword,
+        user_token: null,
       },
       {
         where: { email },
