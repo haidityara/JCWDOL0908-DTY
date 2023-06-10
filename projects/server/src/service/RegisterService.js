@@ -42,6 +42,7 @@ const CreateUser = async (data) => {
     const send = await Mailer.Transport.sendMail(mail);
 
     if (!send) {
+      console.log("Email failed to send");
       await t.rollback();
       return {
         error: new Error("Email failed to send"),
@@ -78,7 +79,12 @@ const VerifyUser = async (data) => {
     const email = await DecodeToken(token);
 
     // Check if user exists
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: {
+        email,
+        user_token: token,
+      },
+    });
     if (!user) {
       return {
         error: new Error("User not found"),

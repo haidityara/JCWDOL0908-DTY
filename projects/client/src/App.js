@@ -8,7 +8,8 @@ import UserManagement from "./pages/UserManagement";
 import ProductManagement from "./pages/ProductManagement";
 import ProductOrder from "./pages/ProductOrder";
 import ProductReport from "./pages/ProductReport";
-import LoginClient from "./pages/client/Login";
+import LoginClient from "./pages/client/auth/Login";
+import VerificationAuth from "./pages/client/auth/Verification";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -26,6 +27,7 @@ function App() {
         {/*Client Route*/}
         <Route path="/" element={<Homepage />} />
         <Route path="/client" element={<LoginClient />} />
+        <Route path="/verify/:token" element={<VerificationAuth />} />
 
         {/*Admin Route*/}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />

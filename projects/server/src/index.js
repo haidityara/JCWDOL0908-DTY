@@ -7,7 +7,8 @@ const db = require("./model");
 
 const PORT = process.env.PORT || 8000;
 const app = express();
-app.use(cors());
+// allow http://localhost:3000/ to access our API
+app.use(cors({ origin: "http://localhost:3000" }));
 
 // Init Database
 db.sequelize
