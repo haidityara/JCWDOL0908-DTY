@@ -12,7 +12,13 @@ const VerifyUser = Joi.object({
     .required(),
 });
 
+const AuthUser = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+
 module.exports = {
   RegisterUser,
   VerifyUser,
+  AuthUser,
 };

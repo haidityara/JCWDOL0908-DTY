@@ -1,8 +1,8 @@
-import NavbarClient from "./client/NavbarClient";
-import FooterClient from "./client/FooterClient";
+import NavbarClient from "./NavbarClient";
+import FooterClient from "./FooterClient";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "./client/Loader";
+import Loader from "./Loader";
 
 function LayoutClient({ children }) {
   return (

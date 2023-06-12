@@ -1,7 +1,7 @@
 import BannerLogin from "../../../images/banner/login.avif";
 import LayoutClient from "../../../components/LayoutClient";
 import { Form, Formik } from "formik";
-import FieldPassword from "../../../components/client/FieldPassword";
+import FieldPassword from "../../../components/FieldPassword";
 import { UserVerification } from "../../../validation/User";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";

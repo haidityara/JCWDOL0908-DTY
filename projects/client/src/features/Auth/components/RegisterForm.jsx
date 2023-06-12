@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
-import { setLoading } from "../../features/LoaderSlice";
-import axios from "axios";
-import { ToastError, ToastSuccess } from "../../helper/Toastify";
+import { setLoading } from "../../LoaderSlice";
+import { ToastError, ToastSuccess } from "../../../helper/Toastify";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { RegisterValidation } from "../../validation/User";
+import { RegisterValidation } from "../../../validation/User";
+import { registerBuyer } from "../api/Register";
 
 const RegisterForm = ({ handlePage }) => {
   const dispatch = useDispatch();
   const handleSubmit = async (values) => {
     await dispatch(setLoading(true));
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/register`, values);
+      await registerBuyer(values.email);
       await dispatch(setLoading(false));
       ToastSuccess("Register Success Please Check Your Email");
     } catch (error) {

@@ -1,13 +1,39 @@
-import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { LoginValidation } from "../../validation/User";
+import { LoginValidation } from "../../../validation/User";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../LoaderSlice";
+import { ToastError, ToastSuccess } from "../../../helper/Toastify";
+import { useNavigate } from "react-router-dom";
+import FieldPassword from "../../../components/FieldPassword";
+import Storage from "../../../helper/Storage";
+
+const { loginWithEmailAndPassword } = require("../../auth");
+
+const { setUser } = require("../slice/UserSlice");
 
 const LoginForm = ({ handlePage }) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    // TODO: Call API Login
-    console.log(values);
+  const handleSubmit = async (values) => {
+    await dispatch(setLoading(true));
+    try {
+      const response = await loginWithEmailAndPassword(values.email, values.password);
+      const user = {
+        id: response.data.data.id_user,
+        username: response.data.data.username,
+        email: response.data.data.email,
+        role: response.data.data.id_role,
+      };
+      await dispatch(setUser(user));
+      Storage.setToken(response.data.data.token);
+      await dispatch(setLoading(false));
+      ToastSuccess("Login Success");
+      navigate(-1);
+    } catch (error) {
+      await dispatch(setLoading(false));
+      ToastError(error.response.data.message || "Login Failed");
+    }
   };
 
   return (
@@ -24,22 +50,7 @@ const LoginForm = ({ handlePage }) => {
               <ErrorMessage name="email" component="p" className="text-red-500 text-sm" />
             </div>
             <div className="group relative">
-              <Field
-                type={showPassword ? "text" : "password"}
-                className="border w-full p-3 rounded-md font-body"
-                placeholder="Password"
-                name="password"
-              />
-              <ErrorMessage name="password" component="p" className="text-red-500 text-sm" />
-              <button
-                className="absolute right-3 top-3 text-secondary"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowPassword(!showPassword);
-                }}
-              >
-                {showPassword ? <i className="uil uil-eye"></i> : <i className="uil uil-eye-slash"></i>}
-              </button>
+              <FieldPassword name="password" placeholder="Password" autocomplate="off" />
             </div>
             <div className="group">
               <button className="px-6 py-2 bg-primary text-white font-title rounded-sm w-full" type="submit">

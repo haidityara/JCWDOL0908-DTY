@@ -1,10 +1,10 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import slide1 from "../../images/banner/slide_1.avif";
-import slide2 from "../../images/banner/slide_2.avif";
-import slide3 from "../../images/banner/slide_3.avif";
-import particle from "../../images/particle.png";
+import slide1 from "../images/banner/slide_1.avif";
+import slide2 from "../images/banner/slide_2.avif";
+import slide3 from "../images/banner/slide_3.avif";
+import particle from "../images/particle.png";
 import { Link } from "react-router-dom";
 
 const Slide = ({

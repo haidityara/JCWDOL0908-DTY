@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function NavbarClient() {
   const [scrolled, setScrolled] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const { user } = useSelector((state) => state.user);
+
+  console.log(user);
 
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -81,7 +85,7 @@ function NavbarClient() {
           <button className="flex">
             <i className="uil uil-shopping-cart"></i>
           </button>
-          <Link to="/client" className="flex" title="Login / Register">
+          <Link to={`${user.email ? "/profile" : "/client"}`} className="flex" title="Login / Register">
             <i className="uil uil-user"></i>
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import LayoutClient from "../../components/LayoutClient";
-import Carousel from "../../components/client/Carousel";
+import Carousel from "../../components/Carousel";
 
 function Homepage() {
   return (
