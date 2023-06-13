@@ -3,7 +3,7 @@ import LayoutClient from "../../../components/LayoutClient";
 import { Form, Formik } from "formik";
 import FieldPassword from "../../../components/FieldPassword";
 import { UserVerification } from "../../../validation/User";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../../features/LoaderSlice";
@@ -12,12 +12,14 @@ import { ToastError, ToastSuccess } from "../../../helper/Toastify";
 function Verification() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useParams();
+  const location = useLocation();
+  const token = new URLSearchParams(location.search).get("q");
+
   const handleSubmit = async (values) => {
     dispatch(setLoading(true));
     try {
       await axios.put(`${process.env.REACT_APP_API_BASE_URL}/auth/verify`, {
-        token: values.token,
+        token,
         password: values.password,
       });
       dispatch(setLoading(false));
@@ -40,7 +42,6 @@ function Verification() {
               initialValues={{
                 password: "",
                 confirmPassword: "",
-                token,
               }}
               onSubmit={handleSubmit}
               validationSchema={UserVerification}

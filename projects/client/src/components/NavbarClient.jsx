@@ -8,8 +8,6 @@ function NavbarClient() {
   const [showMenu, setShowMenu] = useState(false);
   const { user } = useSelector((state) => state.user);
 
-  console.log(user);
-
   const handleScroll = () => {
     const offset = window.scrollY;
     if (offset > 200) {

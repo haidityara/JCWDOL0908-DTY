@@ -6,7 +6,7 @@ const VerifyMail = (email, token) => {
     html: `
         <h1>Email Verification</h1>
         <p>Click this link to verify your email</p>
-        <a href="${process.env.CLIENT_URL}/verify/${token}">Verify</a>
+        <a href="${process.env.CLIENT_URL}/verify/?q=${token}">Verify</a>
       `,
   };
 };

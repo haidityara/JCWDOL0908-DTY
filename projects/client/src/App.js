@@ -32,7 +32,7 @@ function App() {
 
         {/*Auth User Route*/}
         <Route path="/client" element={<LoginClient />} />
-        <Route path="/verify/:token" element={<VerificationAuth />} />
+        <Route path="/verify/" element={<VerificationAuth />} />
 
         {/*User Route*/}
         <Route path="/profile" element={<Profile />} />
